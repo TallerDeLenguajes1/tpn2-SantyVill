@@ -14,7 +14,6 @@ int main(){
         for(c = 0;c<M; c++)
         {
             printf("%lf  ",*(pmat+f*M+c));
-            //printf("%lf  ", mt[f][c]);
         }
         printf("\n");
     }
