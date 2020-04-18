@@ -7,24 +7,27 @@ typedef struct
     int velocidad,anio,cantidad;
     char *tipo_cpu;
 }compu;
-compu crearPC(char *tipos);
-void cargarPC(compu *pc,int n,char *tipos);
+
+char tipos[6][10]={"Intel","AMD","Celeron","Athlon","Core","Pentium"};
+
+void crearPC(compu *pc);
+void cargarPC(compu *pc,int n);
 void mostrarLista(compu *pc,int n);
 void mostrarVieja(compu *pc,int n);
 void mostrarVayorVelocidad(compu *pc,int n);
 
 int main(){
     int n;    
-    char tipos[6][10]={"Intel","AMD","Celeron","Athlon","Core","Pentium"};
     srand(time(NULL));
     printf("Ingrese la cantidad de pc: ");
     scanf("%d",&n);
     compu *pc= (compu*)calloc(n,sizeof(compu));
-    int i;
+    cargarPC(pc , n);
+    /*int i;
     for (i = 0; i < n; i++)
     {
         *(pc+i)=crearPC(*(tipos+rand()%6));
-    }
+    }*/
     mostrarLista(&pc[0],n);
     mostrarVieja(pc, n);
     mostrarVayorVelocidad(pc, n);
@@ -33,16 +36,19 @@ int main(){
     return 0;
 }
 
-compu crearPC(char *(tipos)){
-    compu pc;
-    pc.velocidad=rand()%3+1;
-    pc.anio=rand()%18+2000;
-    pc.cantidad=rand()%4+1;
-    pc.tipo_cpu=tipos;
-    return pc;
+void crearPC(compu *pc){
+    pc->velocidad=rand()%3+1;
+    pc->anio=rand()%18+2000;
+    pc->cantidad=rand()%4+1;
+    pc->tipo_cpu=*(tipos+rand()%6);
 }
 
-void cargarPC(compu *pc,int n,char *tipos){
+void cargarPC(compu *pc,int n){
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        crearPC(pc+i);
+    }
 }
 
 void mostrarLista(compu *pc,int n){
@@ -67,7 +73,7 @@ void mostrarVieja(compu *pc,int n){
             num=i;
         }
     }
-    printf("\n\nPc mas vieja: ");
+    printf("\n\n==========Pc mas vieja: ===========");
     printf("\nVelocidad: %dGhz",(pc+num)->velocidad);
     printf("\nAnio: %d",(pc+num)->anio);
     printf("\nCantidad de nucleos: %d",(pc+num)->cantidad);
@@ -84,7 +90,7 @@ void mostrarVayorVelocidad(compu *pc,int n){
             num=i;
         }
     }
-    printf("\n\nPc con mayor velocidad: ");
+    printf("\n\n========Pc con mayor velocidad: =========");
     printf("\nVelocidad: %dGhz",(pc+num)->velocidad);
     printf("\nAnio: %d",(pc+num)->anio);
     printf("\nCantidad de nucleos: %d",(pc+num)->cantidad);
